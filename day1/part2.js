@@ -1,26 +1,32 @@
 const input = Deno.readTextFileSync("day1Input.txt").split("\n");
-let credentails = 0;
+let credentials = 0;
 const parseData = (string) => {
   string = string.split("");
   const [instruction, ...move] = string;
   return [instruction, move.join("")];
 };
-// const offset = (num) => {
-//   if (num.toString()[0] === "-") return "-";
-//   return "";
-// };
+const offset = (num) => {
+  if (num.toString()[0] === "-") return "-";
+  return "";
+};
 const PasswordCrack = (pass) => {
   let gear = 50;
   for (let i = 0; i < pass.length; i++) {
-    gear = password(parseData(pass[i]), gear);
-    console.log(gear);
+    const [instruction, move] = parseData(pass[i]);
+    const updatedGear = password(parseData(pass[i]), gear);
+    if (gear === 0 && move < 100) {
+      gear = updatedGear;
+      continue;
+    }
+    if (move > 100) {
+      if (gear === 0) credentials++;
+    }
   }
-  return credentails;
+  return credentials;
 };
 
 const password = ([instruction, move], gear) => {
   const offset = (instruction === "L") ? -1 : 1;
-  const currstep = gear + offset * move;
 
   return (gear + offset * move) % 100;
 };
