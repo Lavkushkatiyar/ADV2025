@@ -10,7 +10,6 @@ const numberOfSequence = (num, sequence, index) => {
   while (i < 10) {
     if (num.indexOf(sequence, index) !== -1) {
       index = num.indexOf(sequence, index);
-      console.log("i was here ", index);
       count++;
       i++;
     } else break;
