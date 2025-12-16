@@ -1,12 +1,17 @@
 // const input = Deno.readTextFileSync("part1.txt");
 const comapreLast12 = (battrey, arr) => {
-  let somearray = battrey;
+  let somearray = [...battrey];
   let index = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] > somearray[i]) {
-      somearray = somearray.slice(0, i);
-      for (let j = i; j < arr.length; j++) somearray.push(arr[j]);
+  for (let i = arr.length - 13; i < arr.length; i++) { //2
+    console.log(i, arr, somearray);
+    if (arr[i] > somearray[index]) {
+      console.log(somearray, "b");
+      somearray[index] = arr[i];
+      somearray.fill(0, index + 1);
+      console.log(somearray, "a");
     }
+    index++;
+    if (arr.length - i > 12) index = 0;
   }
   return somearray;
 };
@@ -22,10 +27,10 @@ const compareElement = (array, element) => {
 
 const joulEnergy = (arr) => {
   const battrey = arr.slice(0, 12);
-  for (let i = 13; i < arr.length - 12; i++) {
+  for (let i = 12; i < arr.length - 12; i++) {
     compareElement(battrey, arr[i]);
   }
-  return comapreLast12(battrey, arr.slice(arr.length - 12)).join("");
+  return comapreLast12(battrey, arr).join("");
 };
 const countJoules = (input) => {
   const inputs = input.split("\n");
@@ -36,8 +41,5 @@ const countJoules = (input) => {
   }
   return sumOfJoules;
 };
-const input = `987654321111111
-811111111111119
-234234234234278
-818181911112111`;
+const input = `818181911112111`;
 console.log(countJoules(input));
